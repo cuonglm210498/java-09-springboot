@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -82,7 +81,6 @@ public class UserController extends BaseController {
     @GetMapping("/filter")
     @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
     public ResponseEntity<BaseResponse<Page<UserResponse>>> filter(@ModelAttribute UserFilterRequest userFilterRequest) {
-        userValidator.validateUserFilterRequest(userFilterRequest);
         Page<UserResponse> userResponses = userService.filter(userFilterRequest);
         return success(userResponses);
     }
@@ -104,7 +102,6 @@ public class UserController extends BaseController {
     @GetMapping("/getAllByCondition")
     @PreAuthorize("hasAuthority('USER') or hasAnyAuthority('ADMIN')")
     public ResponseEntity<BaseResponse<ListDataResponse<UserResponse>>> getAllByCondition(@ModelAttribute UserFilterRequest request) {
-        userValidator.validateUserFilterRequest(request);
         ListDataResponse<UserResponse> userDetailResponses = userService.getAllByCondition(request);
         return success(userDetailResponses);
     }

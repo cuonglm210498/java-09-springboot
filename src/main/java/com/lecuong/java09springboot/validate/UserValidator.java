@@ -33,18 +33,6 @@ public class UserValidator {
                 .getData();
     }
 
-    public UserFilterRequest validateUserFilterRequest(UserFilterRequest userFilterRequest) {
-        return Validator.data(userFilterRequest)
-                .validate(UserFilterRequest::getUserName, StringUtils::isBlank, () -> new BusinessException(BusinessCodeResponse.USER_NAME_IS_EMPTY))
-                .validate(UserFilterRequest::getUserName, userService::checkUserNameExist, () -> new BusinessException(BusinessCodeResponse.USER_NAME_AVAILABLE))
-                .validate(UserFilterRequest::getEmail, StringUtils::verifyEmail, () -> new BusinessException(BusinessCodeResponse.EMAIL_INVALIDATE))
-                .validate(UserFilterRequest::getEmail, userService::checkEmailExist, () -> new BusinessException(BusinessCodeResponse.EMAIL_AVAILABLE))
-                .validate(UserFilterRequest::getEmail, StringUtils::isBlank, () -> new BusinessException(BusinessCodeResponse.EMAIL_INVALIDATE))
-                .validate(UserFilterRequest::getPhone, StringUtils::verifyPhoneNumber, () -> new BusinessException(BusinessCodeResponse.PHONE_NUMBER_INVALIDATE))
-                .validate(UserFilterRequest::getPhone, userService::checkPhoneExits, () -> new BusinessException(BusinessCodeResponse.PHONE_AVAILABLE))
-                .getData();
-    }
-
     public UserAuthRequest validateUserAuthRequest(UserAuthRequest userAuthRequest) {
         return Validator.data(userAuthRequest)
                 .validate(UserAuthRequest::getUserName, StringUtils::isBlank, () -> new BusinessException(BusinessCodeResponse.USER_NAME_IS_EMPTY))
