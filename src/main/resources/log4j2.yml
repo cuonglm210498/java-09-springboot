@@ -1,0 +1,44 @@
+Configuration:
+  status: warn
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: '%d{yyyy/MM/dd HH:mm:ss.SSS} %-5level - [%t] %c{1} - %m%n'
+    RollingRandomAccessFile:
+      - name: INFO
+        fileName: log/java_09_springboot.log
+        filePattern: log/$${date:yyyy-MM}/%d{yyyy-MM-dd}_java_09_springboot-api-%i.log.gz
+        PatternLayout:
+          pattern: '%d{yyyy/MM/dd HH:mm:ss.SSS} %-5level - %c{1} - %m%n'
+        Policies:
+          TimeBasedTriggeringPolicy: {
+          }
+          OnStartupTriggeringPolicy: {
+          }
+          SizeBasedTriggeringPolicy:
+            size: 200 MB
+      - name: ERROR
+        fileName: log/java_09_springboot-error.log
+        filePattern: log/$${date:yyyy-MM}/%d{yyyy-MM-dd}_java_09_springboot-api-error-%i.log.gz
+        PatternLayout:
+          pattern: '%d{yyyy/MM/dd HH:mm:ss.SSS} %-5level - [%t] %c - %M:%L | %m%n'
+        Policies:
+          TimeBasedTriggeringPolicy: {
+          }
+  Loggers:
+    Logger:
+      - name: EventLogger
+        level: info
+        additivity: false
+        AppenderRef:
+          - ref: ERROR
+          - ref: INFO
+    Root:
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: ERROR
+          level: error
+        - ref: INFO
