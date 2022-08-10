@@ -4,6 +4,7 @@ import com.lecuong.java09springboot.controller.BaseController;
 import com.lecuong.java09springboot.modal.AccountInfo;
 import com.lecuong.java09springboot.modal.request.user.UserCreateRequest;
 import com.lecuong.java09springboot.modal.request.user.UserFilterRequest;
+import com.lecuong.java09springboot.modal.request.user.UserFilterWithListBlogRequest;
 import com.lecuong.java09springboot.modal.response.BaseResponse;
 import com.lecuong.java09springboot.modal.response.ListDataResponse;
 import com.lecuong.java09springboot.modal.response.user.UserResponse;
@@ -104,5 +105,11 @@ public class UserController extends BaseController {
     public ResponseEntity<BaseResponse<ListDataResponse<UserResponse>>> getAllByCondition(@ModelAttribute UserFilterRequest request) {
         ListDataResponse<UserResponse> userDetailResponses = userService.getAllByCondition(request);
         return success(userDetailResponses);
+    }
+
+    @PostMapping("/filter/user-by-blog")
+    public ResponseEntity<BaseResponse<Page<UserResponse>>> filter(@RequestBody UserFilterWithListBlogRequest userFilterWithListBlogRequest) {
+        Page<UserResponse> userResponses = userService.filter(userFilterWithListBlogRequest);
+        return success(userResponses);
     }
 }

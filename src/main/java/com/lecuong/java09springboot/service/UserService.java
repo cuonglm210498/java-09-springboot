@@ -3,6 +3,7 @@ package com.lecuong.java09springboot.service;
 import com.lecuong.java09springboot.modal.request.user.UserAuthRequest;
 import com.lecuong.java09springboot.modal.request.user.UserCreateRequest;
 import com.lecuong.java09springboot.modal.request.user.UserFilterRequest;
+import com.lecuong.java09springboot.modal.request.user.UserFilterWithListBlogRequest;
 import com.lecuong.java09springboot.modal.response.ListDataResponse;
 import com.lecuong.java09springboot.modal.response.user.UserResponse;
 import com.lecuong.java09springboot.security.UserDetails;
@@ -43,4 +44,6 @@ public interface UserService {
     List<UserResponse> getAllByCreatedBy();
 
     ListDataResponse<UserResponse> getAllByCondition(UserFilterRequest request);
+
+    Page<UserResponse> filter(UserFilterWithListBlogRequest userFilterWithListBlogRequest);
 }

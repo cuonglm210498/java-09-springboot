@@ -8,6 +8,7 @@ import com.lecuong.java09springboot.mapper.UserMapper;
 import com.lecuong.java09springboot.modal.request.user.UserAuthRequest;
 import com.lecuong.java09springboot.modal.request.user.UserCreateRequest;
 import com.lecuong.java09springboot.modal.request.user.UserFilterRequest;
+import com.lecuong.java09springboot.modal.request.user.UserFilterWithListBlogRequest;
 import com.lecuong.java09springboot.modal.response.ListDataResponse;
 import com.lecuong.java09springboot.modal.response.user.UserResponse;
 import com.lecuong.java09springboot.repository.RoleRepository;
@@ -159,5 +160,12 @@ public class UserServiceImpl implements UserService {
 
         return ListDataResponse
                 .of(totalPage, userDetailResponses);
+    }
+
+    @Override
+    public Page<UserResponse> filter(UserFilterWithListBlogRequest userFilterWithListBlogRequest) {
+        PageRequest pageRequest = PageRequest.of(userFilterWithListBlogRequest.getPageIndex(), userFilterWithListBlogRequest.getPageSize());
+        Page<User> users = userRepository.findAll(UserSpecification.filter(userFilterWithListBlogRequest), pageRequest.previousOrFirst());
+        return users.map(userMapper::to);
     }
 }
